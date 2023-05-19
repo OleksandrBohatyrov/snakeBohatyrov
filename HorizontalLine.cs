@@ -9,7 +9,7 @@ namespace snakeBohatyrov
 {
     internal class HorizontalLine : Figure
     {
-        private List<Point> pList;
+ 
 
         public HorizontalLine(int xLeft, int xRight, int y, char sym)
         {
