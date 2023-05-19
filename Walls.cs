@@ -13,7 +13,9 @@ namespace snakeBohatyrov
 
         public Walls(int mapWidth, int mapHeight)
         {
+  
             wallList = new List<Figure>();
+
 
             // Отрисовка рамочки
             HorizontalLine upLine = new HorizontalLine(0, mapWidth - 2, 0, '+');
