@@ -1,15 +1,45 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
 namespace snakeBohatyrov
 {
+    class SnakeGame
+    {
+        private int score;
+
+        public SnakeGame()
+        {
+            score = 0;
+        }
+
+        public void EatFood()
+        {
+            score++; // Прибавляем 1 к результату
+        }
+
+        public int GetScore()
+        {
+            return score;
+        }
+    }
+
     class Program
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Добро пожаловать в игру Змейка!");
+
+            Console.Write("Введите ваше имя: ");
+            string playerName = Console.ReadLine();
+
+            Console.WriteLine($"Привет, {playerName}! Приготовьтесь к игре.");
+            Console.Clear();
+
             Console.SetWindowSize(80, 25);
 
             Walls walls = new Walls(80, 25);
@@ -22,9 +52,11 @@ namespace snakeBohatyrov
             snake.Draw();
 
             FoodCreator foodCreator = new FoodCreator(80, 25, '$');
-            
+
             Point food = foodCreator.CreateFood();
             food.Draw();
+
+            SnakeGame snakeGame = new SnakeGame();
 
             while (true)
             {
@@ -36,6 +68,7 @@ namespace snakeBohatyrov
                 {
                     food = foodCreator.CreateFood();
                     food.Draw();
+                    snakeGame.EatFood(); // Увеличить счет при поедании еды
                 }
                 else
                 {
@@ -50,9 +83,30 @@ namespace snakeBohatyrov
                 }
             }
             WriteGameOver();
-            Console.ReadLine();
-        }
 
+            Console.ReadLine();
+
+            PlayerResultsManager manager = new PlayerResultsManager();
+
+            int gameScore = snakeGame.GetScore();
+
+            List<PlayerResult> playerResults = new List<PlayerResult>();
+
+            if (File.Exists("results.txt"))
+            {
+                playerResults = manager.LoadResultsFromFile("results.txt");
+            }
+
+            playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore });
+
+            manager.SaveResultsToFile(playerResults, "results.txt");
+
+            Console.WriteLine("Результаты (по убыванию):");
+            foreach (PlayerResult result in playerResults)
+            {
+                Console.WriteLine($"{result.Name}: {result.Score}");
+            }
+        }
 
         static void WriteGameOver()
         {
@@ -67,11 +121,12 @@ namespace snakeBohatyrov
             WriteText("============================", xOffset, yOffset++);
         }
 
+
         static void WriteText(String text, int xOffset, int yOffset)
         {
             Console.SetCursorPosition(xOffset, yOffset);
             Console.WriteLine(text);
         }
-
+        
     }
 }
