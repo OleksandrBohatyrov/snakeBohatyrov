@@ -11,10 +11,12 @@ namespace snakeBohatyrov
     class SnakeGame
     {
         private int score;
+        private int speed; 
 
         public SnakeGame()
         {
             score = 0;
+            speed = 100; // Установка значения по умолчанию
         }
 
         public void EatFood()
@@ -26,13 +28,29 @@ namespace snakeBohatyrov
         {
             return score;
         }
+
+        public int GetSpeed() // Получение значения скорости
+        {
+            return speed;
+        }
+
+        public void SetSpeed(int newSpeed) // Установка значения скорости
+        {
+            speed = newSpeed;
+        }
     }
 
     class Program
     {
         static void Main(string[] args)
         {
+            SnakeGame snakeGame = new SnakeGame();
             Console.WriteLine("Добро пожаловать в игру Змейка!");
+
+            Console.Write("Введите скорость змейки: ");
+            int speed = int.Parse(Console.ReadLine());
+            snakeGame.SetSpeed(speed);
+            
 
             Console.Write("Введите ваше имя: ");
             string playerName = Console.ReadLine();
@@ -47,16 +65,16 @@ namespace snakeBohatyrov
 
             // Отрисовка точек			
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Point p = new Point(4, 5, '●');
+            Point p = new Point(4, 5, '●', ConsoleColor.Green);
             Snake snake = new Snake(p, 4, Direction.RIGHT);
             snake.Draw();
 
-            FoodCreator foodCreator = new FoodCreator(80, 25, '$');
+            FoodCreator foodCreator = new FoodCreator(80, 25, '$', ConsoleColor.Green);
 
             Point food = foodCreator.CreateFood();
             food.Draw();
 
-            SnakeGame snakeGame = new SnakeGame();
+            
 
             while (true)
             {
@@ -73,6 +91,7 @@ namespace snakeBohatyrov
                 else
                 {
                     snake.Move();
+                    Thread.Sleep(snakeGame.GetSpeed()); // Скорость
                 }
 
                 Thread.Sleep(100);
@@ -92,16 +111,16 @@ namespace snakeBohatyrov
 
             List<PlayerResult> playerResults = new List<PlayerResult>();
 
-            if (File.Exists("results.txt"))
+            if (File.Exists("C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt"))
             {
-                playerResults = manager.LoadResultsFromFile("results.txt");
+                playerResults = manager.LoadResultsFromFile("C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt");
             }
 
             playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore });
 
-            manager.SaveResultsToFile(playerResults, "results.txt");
+            manager.SaveResultsToFile(playerResults, "C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt");
 
-            Console.WriteLine("Результаты (по убыванию):");
+            Console.WriteLine("Результаты :");
             foreach (PlayerResult result in playerResults)
             {
                 Console.WriteLine($"{result.Name}: {result.Score}");
@@ -128,5 +147,7 @@ namespace snakeBohatyrov
             Console.WriteLine(text);
         }
         
+
+
     }
 }

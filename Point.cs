@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,16 +13,15 @@ namespace snakeBohatyrov
         public int x;
         public int y;
         public char sym;
+        public ConsoleColor color;
 
-        public Point()
-        {
-        }
 
-        public Point(int x, int y, char sym)
+        public Point(int x, int y, char sym, ConsoleColor color)
         {
             this.x = x;
             this.y = y;
             this.sym = sym;
+            this.color = color;
         }
 
         public Point(Point p)
