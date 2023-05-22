@@ -72,7 +72,7 @@ namespace snakeBohatyrov
             snake.Draw();
 
             FoodCreator foodCreator = new FoodCreator(80, 25, '$', ConsoleColor.Green);
-
+                
             Point food = foodCreator.CreateFood();
             food.Draw();
 
