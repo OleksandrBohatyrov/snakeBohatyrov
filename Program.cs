@@ -2,12 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.IO;
+using NAudio;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading;
 
 namespace snakeBohatyrov
 {
+    
     class SnakeGame
     {
         private int score;
@@ -47,12 +49,12 @@ namespace snakeBohatyrov
             SnakeGame snakeGame = new SnakeGame();
             Console.WriteLine("Добро пожаловать в игру Змейка!");
 
-            Console.Write("Введите скорость змейки: ");
+            Console.Write("Write speed: ");
             int speed = int.Parse(Console.ReadLine());
             snakeGame.SetSpeed(speed);
             
 
-            Console.Write("Введите ваше имя: ");
+            Console.Write("Write your name: ");
             string playerName = Console.ReadLine();
 
             Console.WriteLine($"Привет, {playerName}! Приготовьтесь к игре.");
@@ -74,7 +76,9 @@ namespace snakeBohatyrov
             Point food = foodCreator.CreateFood();
             food.Draw();
 
-            
+            sound mäng = new sound();
+            ConsoleKeyInfo nupp = new ConsoleKeyInfo();
+            _ = mäng.Tagaplaanis_Mangida("C:\\Users\\opilane\\source\\repos\\snakeBohatyrov\\bin\\Debug\\net6.0\\Back.wav");
 
             while (true)
             {
@@ -111,14 +115,14 @@ namespace snakeBohatyrov
 
             List<PlayerResult> playerResults = new List<PlayerResult>();
 
-            if (File.Exists("C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt"))
+            if (File.Exists("C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt"))
             {
-                playerResults = manager.LoadResultsFromFile("C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt");
+                playerResults = manager.LoadResultsFromFile("C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt");
             }
 
             playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore });
 
-            manager.SaveResultsToFile(playerResults, "C:\\Users\\bogat\\source\\repos\\snakeBohatyrov\\results.txt");
+            manager.SaveResultsToFile(playerResults, "C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt");
 
             Console.WriteLine("Результаты :");
             foreach (PlayerResult result in playerResults)
