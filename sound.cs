@@ -38,7 +38,7 @@ namespace snakeBohatyrov
                     waveOutDevice.Init(audioFileReader);
                     waveOutDevice.Play();
                     while (waveOutDevice.PlaybackState == PlaybackState.Playing)
-                    {
+                    {   
                         Thread.Sleep(50);
                     }
                 }

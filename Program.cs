@@ -78,7 +78,8 @@ namespace snakeBohatyrov
 
             sound mäng = new sound();
             ConsoleKeyInfo nupp = new ConsoleKeyInfo();
-            _ = mäng.Tagaplaanis_Mangida("C:\\Users\\opilane\\source\\repos\\snakeBohatyrov\\bin\\Debug\\net6.0\\Back.wav");
+            _ = mäng.Tagaplaanis_Mangida("../../../back.wav");
+            
 
             while (true)
             {
@@ -88,6 +89,7 @@ namespace snakeBohatyrov
                 }
                 if (snake.Eat(food))
                 {
+                    _ = mäng.Natuke_mangida("../../../eat.wav");
                     food = foodCreator.CreateFood();
                     food.Draw();
                     snakeGame.EatFood(); // Увеличить счет при поедании еды
@@ -115,14 +117,14 @@ namespace snakeBohatyrov
 
             List<PlayerResult> playerResults = new List<PlayerResult>();
 
-            if (File.Exists("C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt"))
+            if (File.Exists("../../../results.txt"))
             {
-                playerResults = manager.LoadResultsFromFile("C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt");
+                playerResults = manager.LoadResultsFromFile("../../../results.txt");
             }
 
             playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore });
 
-            manager.SaveResultsToFile(playerResults, "C:\\Users\\opilane\\Source\\Repos\\snakeBohatyrov\\results.txt");
+            manager.SaveResultsToFile(playerResults, "../../../results.txt");
 
             Console.WriteLine("Результаты :");
             foreach (PlayerResult result in playerResults)
@@ -142,6 +144,8 @@ namespace snakeBohatyrov
             yOffset++;
             WriteText("Автор: Oleksandr Bohatyrov", xOffset + 2, yOffset++);
             WriteText("============================", xOffset, yOffset++);
+            sound over = new sound();
+            _ = over.Natuke_mangida("../../../over.wav");
         }
 
 
