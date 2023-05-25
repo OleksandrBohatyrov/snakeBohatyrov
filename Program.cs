@@ -40,6 +40,22 @@ namespace snakeBohatyrov
         {
             speed = newSpeed;
         }
+
+        public void PrintScore()
+        {
+            int originalCursorLeft = Console.CursorLeft;
+            int originalCursorTop = Console.CursorTop;
+
+            Console.SetCursorPosition(Console.WindowWidth - 10, 0); // Установка позиции курсора в правый верхний угол
+
+            Console.ForegroundColor = ConsoleColor.Red; // Установка красного цвета вывода
+            Console.Write("Score: " + score);
+            Console.ResetColor(); // Сброс цвета вывода
+
+            Console.SetCursorPosition(originalCursorLeft, originalCursorTop); // Возвращение курсора на исходную позицию
+        }
+
+
     }
 
     class Program
@@ -80,15 +96,19 @@ namespace snakeBohatyrov
             ConsoleKeyInfo nupp = new ConsoleKeyInfo();
             _ = mäng.Tagaplaanis_Mangida("../../../back.wav");
             
-
+            
             while (true)
             {
+                
                 if (walls.IsHit(snake) || snake.IsHitTail())
                 {
+
                     break;
+
                 }
                 if (snake.Eat(food))
                 {
+                    snakeGame.PrintScore();
                     _ = mäng.Natuke_mangida("../../../eat.wav");
                     food = foodCreator.CreateFood();
                     food.Draw();
