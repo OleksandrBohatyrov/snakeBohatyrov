@@ -8,12 +8,10 @@ namespace snakeBohatyrov
 {
     class PlayerResult
     {
-
         public string Name { get; set; }
         public int Score { get; set; }
-
+        public TimeSpan Time { get; set; }
     }
-
 
     class PlayerResultsManager
     {
@@ -23,7 +21,7 @@ namespace snakeBohatyrov
             {
                 foreach (PlayerResult result in results)
                 {
-                    writer.WriteLine($"{result.Name},{result.Score}");
+                    writer.WriteLine($"{result.Name},{result.Score},{result.Time}");
                 }
             }
         }
@@ -39,12 +37,13 @@ namespace snakeBohatyrov
                 {
                     string[] parts = line.Split(',');
 
-                    if (parts.Length == 2)
+                    if (parts.Length == 3)
                     {
                         string name = parts[0];
                         int score = int.Parse(parts[1]);
+                        TimeSpan time = TimeSpan.Parse(parts[2]);
 
-                        results.Add(new PlayerResult { Name = name, Score = score });
+                        results.Add(new PlayerResult { Name = name, Score = score, Time = time });
                     }
                 }
             }

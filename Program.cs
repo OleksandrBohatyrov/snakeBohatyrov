@@ -13,12 +13,20 @@ namespace snakeBohatyrov
     class SnakeGame
     {
         private int score;
-        private int speed; 
+        private int speed;
+        private DateTime startTime;
+
 
         public SnakeGame()
         {
             score = 0;
             speed = 100; // Установка значения по умолчанию
+            startTime = DateTime.Now;
+        }
+
+        public TimeSpan GetElapsedTime()
+        {
+            return DateTime.Now - startTime;
         }
 
         public void EatFood()
@@ -30,6 +38,7 @@ namespace snakeBohatyrov
         {
             return score;
         }
+
 
         public int GetSpeed() // Получение значения скорости
         {
@@ -52,6 +61,9 @@ namespace snakeBohatyrov
             Console.Write("Score: " + score);
             Console.ResetColor(); // Сброс цвета вывода
 
+            Console.SetCursorPosition(Console.WindowWidth - 30, 0); // Позиция для вывода времени жизни
+            Console.Write("Time: " + GetElapsedTime().ToString(@"hh\:mm\:ss"));
+
             Console.SetCursorPosition(originalCursorLeft, originalCursorTop); // Возвращение курсора на исходную позицию
         }
 
@@ -63,7 +75,7 @@ namespace snakeBohatyrov
         static void Main(string[] args)
         {
             SnakeGame snakeGame = new SnakeGame();
-            Console.WriteLine("Добро пожаловать в игру Змейка!");
+            Console.WriteLine("Tere tulemast Serpentine'i mängu!");
 
             Console.Write("Write speed: ");
             int speed = int.Parse(Console.ReadLine());
@@ -73,8 +85,10 @@ namespace snakeBohatyrov
             Console.Write("Write your name: ");
             string playerName = Console.ReadLine();
 
-            Console.WriteLine($"Привет, {playerName}! Приготовьтесь к игре.");
+            Console.WriteLine($"Tere, {playerName}! Ole valmis mängima.");
             Console.Clear();
+            
+
 
             Console.SetWindowSize(80, 25);
 
@@ -116,6 +130,7 @@ namespace snakeBohatyrov
                 }
                 else
                 {
+                    snakeGame.GetElapsedTime();
                     snake.Move();
                     Thread.Sleep(snakeGame.GetSpeed()); // Скорость
                 }
@@ -146,10 +161,10 @@ namespace snakeBohatyrov
 
             manager.SaveResultsToFile(playerResults, "../../../results.txt");
 
-            Console.WriteLine("Результаты :");
+            Console.WriteLine("Results :");
             foreach (PlayerResult result in playerResults)
             {
-                Console.WriteLine($"{result.Name}: {result.Score}");
+                Console.WriteLine($"{result.Name}: {result.Score} {result.Time}");
             }
         }
 
@@ -160,12 +175,13 @@ namespace snakeBohatyrov
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(xOffset, yOffset++);
             WriteText("============================", xOffset, yOffset++);
-            WriteText("И Г Р А    О К О Н Ч Е Н А", xOffset + 1, yOffset++);
+            WriteText("Gmae Over", xOffset + 1, yOffset++);
             yOffset++;
             WriteText("Автор: Oleksandr Bohatyrov", xOffset + 2, yOffset++);
             WriteText("============================", xOffset, yOffset++);
             sound over = new sound();
             _ = over.Natuke_mangida("../../../over.wav");
+            
         }
 
 
