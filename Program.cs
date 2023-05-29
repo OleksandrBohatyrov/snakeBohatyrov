@@ -113,7 +113,8 @@ namespace snakeBohatyrov
             
             while (true)
             {
-                
+                snakeGame.PrintScore();
+
                 if (walls.IsHit(snake) || snake.IsHitTail())
                 {
 
@@ -122,7 +123,7 @@ namespace snakeBohatyrov
                 }
                 if (snake.Eat(food))
                 {
-                    snakeGame.PrintScore();
+                    
                     _ = mäng.Natuke_mangida("../../../eat.wav");
                     food = foodCreator.CreateFood();
                     food.Draw();
@@ -130,7 +131,7 @@ namespace snakeBohatyrov
                 }
                 else
                 {
-                    snakeGame.GetElapsedTime();
+                    
                     snake.Move();
                     Thread.Sleep(snakeGame.GetSpeed()); // Скорость
                 }
