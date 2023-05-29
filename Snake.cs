@@ -68,24 +68,15 @@ namespace snakeBohatyrov
 
         public bool Eat(Point food)
         {
-            Point head = GetNextPoint();
-
+            Point head = GetNextPoint();    
             if (head.IsHit(food))
 
-            {
-                while(true)
-                {
+            { 
                     food.sym = head.sym;
                     pList.Add(food);
                     return true;
-
-                }
-
-
-
             }
             else
-
                 return false;
         }
         

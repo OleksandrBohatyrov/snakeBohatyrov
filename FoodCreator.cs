@@ -14,7 +14,7 @@ namespace snakeBohatyrov
             char sym;
             private ConsoleColor color;
 
-        Random random = new Random();
+            Random random = new Random();
 
             public FoodCreator(int mapWidth, int mapHeight, char sym, ConsoleColor color)
             {
