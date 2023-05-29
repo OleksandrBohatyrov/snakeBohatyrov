@@ -80,17 +80,15 @@ namespace snakeBohatyrov
             Console.Write("Write speed: ");
             int speed = int.Parse(Console.ReadLine());
             snakeGame.SetSpeed(speed);
-            
 
             Console.Write("Write your name: ");
             string playerName = Console.ReadLine();
 
             Console.WriteLine($"Tere, {playerName}! Ole valmis mängima.");
             Console.Clear();
-            
-
 
             Console.SetWindowSize(80, 25);
+
 
             Walls walls = new Walls(80, 25);
             walls.Draw();
@@ -157,12 +155,14 @@ namespace snakeBohatyrov
             {
                 playerResults = manager.LoadResultsFromFile("../../../results.txt");
             }
+            DateTime endTime = DateTime.Now;
+            TimeSpan elapsedTime = endTime - snakeGame.GetStartTime();
 
-            playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore });
+            playerResults.Add(new PlayerResult { Name = playerName, Score = gameScore, Time = elapsedTime });
 
             manager.SaveResultsToFile(playerResults, "../../../results.txt");
 
-            Console.WriteLine("Results :");
+            Console.WriteLine("Results:");
             foreach (PlayerResult result in playerResults)
             {
                 Console.WriteLine($"{result.Name}: {result.Score} {result.Time}");
