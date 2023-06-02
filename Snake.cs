@@ -79,6 +79,21 @@ namespace snakeBohatyrov
             else
                 return false;
         }
+
+        public bool Eat2(Point food2)
+        {
+            Point head = GetNextPoint();
+            if (head.IsHit(food2))
+            {
+                food2.sym = head.sym;
+                pList.Add(food2);
+                food2.sym = head.sym;
+                pList.Add(food2);
+                return true;
+            }
+            else
+                return false;
+        }
         
     }
 }

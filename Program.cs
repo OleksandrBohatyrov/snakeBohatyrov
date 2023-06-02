@@ -48,6 +48,7 @@ namespace snakeBohatyrov
         public void SetSpeed(int newSpeed) // Установка значения скорости
         {
             speed = newSpeed;
+           
         }
 
         public void PrintScore()
@@ -67,6 +68,10 @@ namespace snakeBohatyrov
             TimeSpan elapsedTime = GetElapsedTime();
             TimeSpan roundedTime = TimeSpan.FromSeconds(Math.Round(elapsedTime.TotalSeconds));
             Console.Write("Time: " + roundedTime.ToString(@"hh\:mm\:ss"));
+
+
+            Console.SetCursorPosition(Console.WindowWidth - 50, 0);
+            Console.Write("Speed: " + speed);
 
 
             Console.SetCursorPosition(originalCursorLeft, originalCursorTop); // Возвращение курсора на исходную позицию
@@ -112,6 +117,11 @@ namespace snakeBohatyrov
             Point food = foodCreator.CreateFood();
             food.Draw();
 
+
+            FoodCreator foodCreator2 = new FoodCreator(80, 25, '¤', ConsoleColor.Red);
+            Point food2 = foodCreator2.CreateFood2();
+            food.Draw();
+
             sound mäng = new sound();
             ConsoleKeyInfo nupp = new ConsoleKeyInfo();
             _ = mäng.Tagaplaanis_Mangida("../../../back.wav");
@@ -136,6 +146,18 @@ namespace snakeBohatyrov
                     // Создание новой еды
                     food = foodCreator.CreateFood();
                     food.Draw();
+                    food2 = foodCreator2.CreateFood2();
+                    food2.Draw();
+                }
+                if (snake.Eat(food2))
+                {
+
+                    _ = mäng.Natuke_mangida("../../../eat.wav");
+                    snakeGame.EatFood(); // Увеличить счет при поедании еды
+                    snakeGame.SetSpeed(snakeGame.GetSpeed() + 20); // Увеличить скорость на 20
+                    food2 = foodCreator2.CreateFood2();
+                    food2.Draw();
+
                 }
                 else
                 {

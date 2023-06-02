@@ -24,6 +24,8 @@ namespace snakeBohatyrov
                 this.color = color;
             }
 
+
+
             public Point CreateFood()
             {
                 
@@ -31,6 +33,15 @@ namespace snakeBohatyrov
                 int y = random.Next(2, mapHeight - 2);
                 return new Point(x, y, sym, color);
             }
-        
+
+            public Point CreateFood2()
+            {
+
+                int x = random.Next(2, mapWidht - 2);
+                int y = random.Next(2, mapHeight - 2);
+                return new Point(x, y, sym, color);
+            }
+
+
     }
 }
