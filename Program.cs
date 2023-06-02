@@ -34,6 +34,11 @@ namespace snakeBohatyrov
             score++; // Прибавляем 1 к результату
         }
 
+        public void EatFood2()
+        {
+            score--; // -1 от результата
+        }
+
         public int GetScore()
         {
             return score;
@@ -78,7 +83,6 @@ namespace snakeBohatyrov
             
         }
 
-
     }
 
     class Program
@@ -120,7 +124,11 @@ namespace snakeBohatyrov
 
             FoodCreator foodCreator2 = new FoodCreator(80, 25, '¤', ConsoleColor.Red);
             Point food2 = foodCreator2.CreateFood2();
-            food.Draw();
+            food2.Draw();
+
+            FoodCreator foodCreator3 = new FoodCreator(80, 25, '>', ConsoleColor.Red);
+            Point food3 = foodCreator3.CreateFood3();
+            food3.Draw();
 
             sound mäng = new sound();
             ConsoleKeyInfo nupp = new ConsoleKeyInfo();
@@ -148,20 +156,26 @@ namespace snakeBohatyrov
                     food.Draw();
                     food2 = foodCreator2.CreateFood2();
                     food2.Draw();
+                    food3 = foodCreator3.CreateFood3();
+                    food3.Draw();
                 }
                 if (snake.Eat(food2))
                 {
-
                     _ = mäng.Natuke_mangida("../../../eat.wav");
-                    snakeGame.EatFood(); // Увеличить счет при поедании еды
-                    snakeGame.SetSpeed(snakeGame.GetSpeed() + 20); // Увеличить скорость на 20
-                    food2 = foodCreator2.CreateFood2();
-                    food2.Draw();
+                    snakeGame.EatFood2();
+                    snakeGame.SetSpeed(snakeGame.GetSpeed() + 20); // Уменьшить скорость на 20
 
                 }
-                else
+
+                if (snake.Eat(food3))
                 {
-                    
+                    _ = mäng.Natuke_mangida("../../../eat.wav");
+                    snakeGame.SetSpeed(snakeGame.GetSpeed() - 20); // Уменьшить скорость на 20
+
+                }
+
+                else
+                {                 
                     snake.Move();
                     Thread.Sleep(snakeGame.GetSpeed()); // Скорость
                 }
@@ -223,8 +237,5 @@ namespace snakeBohatyrov
             Console.SetCursorPosition(xOffset, yOffset);
             Console.WriteLine(text);
         }
-        
-
-
     }
 }
